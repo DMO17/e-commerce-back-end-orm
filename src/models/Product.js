@@ -15,7 +15,7 @@ const schema = {
     primaryKey: true,
     autoIncrement: true,
   },
-  productName: {
+  product_name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -34,7 +34,7 @@ const schema = {
       isNumeric: true,
     },
   },
-  categoryId: {
+  category_id: {
     type: DataTypes.INTEGER,
     references: {
       model: "category",
@@ -47,7 +47,7 @@ const options = {
   sequelize,
   timestamps: false,
   freezeTableName: true,
-  underscored: false,
+  underscored: true,
   modelName: "product",
 };
 

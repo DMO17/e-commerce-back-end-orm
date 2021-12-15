@@ -11,7 +11,7 @@ const schema = {
     primaryKey: true,
     autoIncrement: true,
   },
-  categoryName: {
+  category_name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -21,7 +21,7 @@ const options = {
   sequelize,
   timestamps: false,
   freezeTableName: true,
-  underscored: false,
+  underscored: true,
   modelName: "category",
 };
 
