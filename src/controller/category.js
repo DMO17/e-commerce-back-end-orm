@@ -62,42 +62,32 @@ const createCategories = async (req, res) => {
 
 const updateCategories = async (req, res) => {
   // update a category by its `id` value
-  // try {
-  //   const { category_name } = req.body;
-  //   if (category_name) {
-  //     await Category.update({
-  //       category_name,
-  //       where: {
-  //         id: req.params.id,
-  //       },
-  //     });
-  //     return res.json({ success: true, data: "updated a category" });
-  //   }
-  //   return res
-  //     .status(404)
-  //     .json({ success: false, error: "Please provide the correct fields" });
-  // } catch (error) {
-  //   console.log(`[ERROR]: Get category , ${error.message}`);
-  //   return res
-  //     .status(500)
-  //     .json({ success: false, error: "Failed to send response" });
-  // }
-
   try {
-    const categoryData = await Category.update(req.body, {
-      where: {
-        id: req.params.id,
-      },
-    });
+    const { category_name } = req.body;
 
-    console.log(categoryData);
-    if (!categoryData[0]) {
-      res.status(404).json({ message: "No category with this id!" });
-      return;
+    if (category_name) {
+      const data = await Category.update(req.body, {
+        where: {
+          id: req.params.id,
+        },
+      });
+
+      if (!data[0]) {
+        return res
+          .status(404)
+          .json({ message: "No category with this id exists" });
+      }
+
+      return res.json({ success: true, data: "updated a category" });
     }
-    res.status(200).json(categoryData);
-  } catch (err) {
-    res.status(500).json(err);
+    return res
+      .status(404)
+      .json({ success: false, error: "Please provide the correct fields" });
+  } catch (error) {
+    console.log(`[ERROR]: Get category , ${error.message}`);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to send response" });
   }
 };
 
