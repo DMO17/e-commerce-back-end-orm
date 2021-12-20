@@ -6,7 +6,11 @@ This project is the back end for an e-commerce site by creating and configuring 
 
 ## Video :
 
-To see how the application works <a href='https://drive.google.com/file/d/1T8juFqB1MvFMToUagMeRDp75ay46f5Pt/view?usp=sharing'>click here </a>
+To see how the application works click the following:
+
+- <a href='https://drive.google.com/file/d/1olYhwqL7l6MGR6DnwRq9S2GOkhSUsGPe/view?usp=sharing'> Categories</a>
+- <a href='https://drive.google.com/file/d/1-fTBCsefklvPdAGbQFu5ys-gRgjl49UC/view?usp=sharing'> Products</a>
+- <a href='https://drive.google.com/file/d/10XNxExuhT2D2PD06F3igekRLhctNjkVz/view?usp=sharing'> Tags</a>
 
 ## User Story
 
