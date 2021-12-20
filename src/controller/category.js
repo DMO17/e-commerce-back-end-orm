@@ -67,7 +67,19 @@ const updateCategories = (req, res) => {
 
 const deleteCategories = (req, res) => {
   // delete a category by its `id` value
-  res.send("categories");
+  try {
+    await Category.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    return res.json({ success: true, data: "Deleted category" });
+  } catch (error) {
+    logError("DELETE category", error.message);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to send response" });
+  }
 };
 
 module.exports = {

@@ -25,7 +25,26 @@ const getAllTags = async (req, res) => {
 const getTagsById = async (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
-  res.send("tags");
+  const { id } = req.params;
+  try {
+    const data = await Tag.findByPk(id, {
+      include: {
+        model: Product,
+        attributes: ["product_name", "price", "stock"],
+      },
+      attributes: ["tag_name"],
+    });
+
+    data
+      ? res.json({ success: true, data })
+      : res.status(404).json({ success: false, error: "Tag does not exist" });
+  } catch (error) {
+    console.log(`[ERROR]: Get Tag , ${error.message}`);
+
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to send response" });
+  }
 };
 
 const createTags = async (req, res) => {
@@ -40,7 +59,19 @@ const updateTags = (req, res) => {
 
 const deleteTags = (req, res) => {
   // delete on tag by its `id` value
-  res.send("tags");
+  try {
+    await Tag.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    return res.json({ success: true, data: "Deleted tag" });
+  } catch (error) {
+    logError("DELETE tag", error.message);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to send response" });
+  }
 };
 
 module.exports = {

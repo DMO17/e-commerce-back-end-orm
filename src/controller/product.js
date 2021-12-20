@@ -21,7 +21,24 @@ const getAllProducts = async (req, res) => {
 const getProductsById = async (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
-  res.send("products");
+  const { id } = req.params;
+  try {
+    const data = await Product.findByPk(id, {
+      include: [{ model: Category }, { model: Tag }],
+    });
+
+    data
+      ? res.json({ success: true, data })
+      : res
+          .status(404)
+          .json({ success: false, error: "Category does not exist" });
+  } catch (error) {
+    console.log(`[ERROR]: Get category , ${error.message}`);
+
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to send response" });
+  }
 };
 
 const createProducts = async (req, res) => {
@@ -100,7 +117,19 @@ const updateProducts = (req, res) => {
 
 const deleteProducts = (req, res) => {
   // delete one product by its `id` value
-  res.send("product");
+  try {
+    await Product.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    return res.json({ success: true, data: "Deleted product" });
+  } catch (error) {
+    logError("DELETE product", error.message);
+    return res
+      .status(500)
+      .json({ success: false, error: "Failed to send response" });
+  }
 };
 
 module.exports = {
