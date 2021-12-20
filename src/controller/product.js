@@ -31,7 +31,7 @@ const getProductsById = async (req, res) => {
       ? res.json({ success: true, data })
       : res
           .status(404)
-          .json({ success: false, error: "Category does not exist" });
+          .json({ success: false, error: "Product does not exist" });
   } catch (error) {
     console.log(`[ERROR]: Get category , ${error.message}`);
 
@@ -43,14 +43,14 @@ const getProductsById = async (req, res) => {
 
 const createProducts = async (req, res) => {
   {
-    /* req.body should look like this...
-          {
-            product_name: "Basketball",
-            price: 200.00,
-            stock: 3,
-            tagIds: [1, 2, 3, 4]
-          }
-        */
+    //  req.body should look like this...
+    //       {
+    //         "product_name": "Basketball",
+    //         "price": "200.00",
+    //         "stock": "3",
+    //         "tagIds":"[1, 2, 3, 4]"
+    //       }
+
     Product.create(req.body)
       .then((product) => {
         // if there's product tags, we need to create pairings to bulk create in the ProductTag model
@@ -118,11 +118,17 @@ const updateProducts = (req, res) => {
 const deleteProducts = async (req, res) => {
   // delete one product by its `id` value
   try {
-    await Product.destroy({
+    const data = await Product.destroy({
       where: {
         id: req.params.id,
       },
     });
+
+    if (!data) {
+      return res
+        .status(404)
+        .json({ message: "No product with this id exists" });
+    }
     return res.json({ success: true, data: "Deleted product" });
   } catch (error) {
     logError("DELETE product", error.message);
