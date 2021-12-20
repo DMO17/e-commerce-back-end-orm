@@ -47,7 +47,7 @@ const getTagsById = async (req, res) => {
   }
 };
 
-const createTags = async (req, res) => {
+const createTags = (req, res) => {
   // create a new tag
   res.send("tags");
 };
@@ -57,7 +57,7 @@ const updateTags = (req, res) => {
   res.send("tags");
 };
 
-const deleteTags = (req, res) => {
+const deleteTags = async (req, res) => {
   // delete on tag by its `id` value
   try {
     await Tag.destroy({

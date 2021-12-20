@@ -115,7 +115,7 @@ const updateProducts = (req, res) => {
     });
 };
 
-const deleteProducts = (req, res) => {
+const deleteProducts = async (req, res) => {
   // delete one product by its `id` value
   try {
     await Product.destroy({
